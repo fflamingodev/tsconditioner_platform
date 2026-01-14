@@ -1,0 +1,7 @@
+{
+  "appBasename": "/webtimeseries/",
+  "kcBaseUrl": "http://localhost:8080",
+  "kcRealm": "timeseries",
+  "kcClientId": "react-app",
+  "authDisabled": false
+}

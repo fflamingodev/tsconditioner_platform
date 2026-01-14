@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!doctype html>
+      <html lang="fr">
+      <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>TimeSeries - UI minimale</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      line-height: 1.4;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    .card {
+      border: 1px solid rgba(120,120,120,.35);
+      border-radius: 12px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    h1 { margin: 0 0 8px; font-size: 22px; }
+    .muted { opacity: .8; font-size: 13px; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; }
+    label { display: block; font-size: 12px; opacity: .85; margin-bottom: 6px; }
+    input {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(120,120,120,.35);
+      min-width: 320px;
+    }
+    button {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(120,120,120,.35);
+      background: transparent;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.08); }
+    pre {
+      margin: 0;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(120,120,120,.35);
+      overflow: auto;
+      max-height: 360px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .ok { color: #1a7f37; }
+    .bad { color: #b42318; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>TimeSeries — UI minimale</h1>
+  <div class="muted">
+    Page statique servie par Go (sans React). Base API supposée : <code>/timeseries/api</code>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 10px; font-size:16px;">Actions rapides</h2>
+    <div class="row">
+      <button id="btnPing">Ping API</button>
+      <button id="btnClear">Clear log</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 10px; font-size:16px;">GET endpoint</h2>
+    <div class="row">
+      <div>
+        <label for="endpoint">Endpoint (relatif à /timeseries)</label>
+        <input id="endpoint" value="/api/ping" />
+      </div>
+      <button id="btnGet">GET</button>
+    </div>
+    <div class="muted" style="margin-top:10px;">
+      Exemple : <code>/api/ping</code> fera un GET vers <code>/timeseries/api/ping</code>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin:0 0 10px; font-size:16px;">Log</h2>
+    <pre id="log"></pre>
+  </div>
+</div>
+
+<script>
+  const logEl = document.getElementById("log");
+
+  function log(line, cls) {
+    const stamp = new Date().toISOString();
+    const prefix = cls === "ok" ? "[OK] " : cls === "bad" ? "[ERR] " : "";
+    logEl.innerHTML += `${stamp} ${prefix}${escapeHtml(line)}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+  }
+
+  async function doGet(relativeToTimeseries) {
+    // Normalise pour construire: /timeseries + <path>
+    let path = relativeToTimeseries.trim();
+    if (!path.startsWith("/")) path = "/" + path;
+
+    const url = "/timeseries" + path;
+
+    log(`GET ${url}`);
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        headers: { "Accept": "application/json" },
+      });
+
+      const text = await res.text();
+      if (!res.ok) {
+        log(`HTTP ${res.status} - ${text}`, "bad");
+        return;
+      }
+
+      // Essaye de pretty-print JSON si possible
+      try {
+        const json = JSON.parse(text);
+        log(JSON.stringify(json, null, 2), "ok");
+      } catch {
+        log(text, "ok");
+      }
+    } catch (e) {
+      log(String(e), "bad");
+    }
+  }
+
+  document.getElementById("btnPing").addEventListener("click", () => doGet("/api/ping"));
+
+  document.getElementById("btnGet").addEventListener("click", () => {
+    const ep = document.getElementById("endpoint").value;
+    doGet(ep);
+  });
+
+  document.getElementById("btnClear").addEventListener("click", () => {
+    logEl.textContent = "";
+  });
+
+  // petit auto-test au chargement
+  doGet("/api/ping");
+</script>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

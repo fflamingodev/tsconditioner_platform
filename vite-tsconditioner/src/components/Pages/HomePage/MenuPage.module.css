@@ -1,0 +1,53 @@
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 100px 20px 20px 20px;
+    max-width: 1200px; /* Limite la largeur totale */
+    margin: 0 auto; /* Centre la grille horizontalement */
+    justify-items: center; /* Aligne les éléments horizontalement à gauche */
+    align-items: start; /* Aligne les éléments verticalement en haut */
+}
+.card {
+    width: 220px;
+    height: 300px;
+    margin: 10px;
+    border: 4px solid coral;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: white;
+    text-align: center;
+}
+
+.cardIcon {
+    display: flex; /* Activer Flexbox */
+    justify-content: center; /* Centrage horizontal */
+    align-items: center; /* Centrage vertical */
+    font-size: 4rem; /* Taille de l'icône */
+    color: coral; /* Couleur de l'icône */
+    height: 150px; /* Hauteur fixe pour centrer */
+}
+
+.cardBody {
+    padding: 10px;
+    text-align: center;
+}
+
+.cardBody a {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    color: coral;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.cardBody a:hover {
+    text-decoration: underline;
+}
+
+.cardBody p {
+    font-size: 0.9rem;
+    color: #555;
+}
