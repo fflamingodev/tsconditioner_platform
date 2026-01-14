@@ -1,0 +1,19 @@
+cat <<EOF > .gitignore
+# Go
+/bin/
+/dist/
+*.exe
+
+# Node / React
+node_modules/
+ui/**/dist/
+ui/**/.env.local
+ui/**/.env.*
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+EOF
