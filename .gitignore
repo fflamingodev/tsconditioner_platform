@@ -31,9 +31,9 @@ go.work.sum
 
 # Node / React
 node_modules/
-ui/**/dist/
-ui/**/.env.local
-ui/**/.env.*
+# ui/**/dist/
+# ui/**/.env.local
+# ui/**/.env.*
 
 # IDE
 .idea/
@@ -125,7 +125,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# dist
 .output
 
 # Gatsby files

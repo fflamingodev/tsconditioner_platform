@@ -1,0 +1,8 @@
+{
+  "PGHOST": "10.11.0.3",
+  "PGPORT": 5432,
+  "PGUSER": "usefuluser",
+  "PGPASSWORD": "useful2025pwd",
+  "PGDATABASE": "DataAccess3",
+  "PGSSLMODE": "disable"
+}

@@ -1,0 +1,6 @@
+{
+  "KC_ISSUER": "http://localhost:8080/realms/timeseries",
+  "KC_JWKS_URL": "http://localhost:8080/realms/timeseries/protocol/openid-connect/certs",
+  "KC_AUDIENCE": "account",
+  "KC_CLIENT_ID": ""
+}
